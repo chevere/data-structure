@@ -19,19 +19,13 @@ use PHPUnit\Framework\TestCase;
 
 final class MapTest extends TestCase
 {
-    public function testAssertEmpty(): void
+    public function testConstructEmpty(): void
     {
         $map = new Map();
+        $this->assertCount(0, $map);
         $this->assertSame([], $map->toArray());
         $this->expectException(OutOfBoundsException::class);
         $map->assertHas('not-found');
-    }
-
-    public function testGetEmpty(): void
-    {
-        $map = new Map();
-        $this->expectException(OutOfBoundsException::class);
-        $map->get('not-found');
     }
 
     public function testConstructWithArguments(): void
@@ -41,10 +35,30 @@ final class MapTest extends TestCase
             'some' => 'thing',
         ];
         $map = new Map(...$arguments);
+        $this->assertCount(2, $map);
         foreach ($arguments as $name => $value) {
             $this->assertSame($value, $map->get($name));
         }
         $this->assertSame($arguments, $map->toArray());
+        $this->assertTrue($map->has('test', 'some'));
+        $array = iterator_to_array($map->getIterator());
+        $this->assertSame($arguments, $array);
+    }
+
+    public function testConstructWithRepeatedArguments(): void
+    {
+        $arguments = [
+            'test' => 123,
+            'test' => 123,
+            'test' => 123,
+        ];
+        $map = new Map(...$arguments);
+        $this->assertCount(1, $map);
+        foreach ($arguments as $name => $value) {
+            $this->assertSame($value, $map->get($name));
+        }
+        $this->assertSame($arguments, $map->toArray());
+        $this->assertTrue($map->has('test'));
     }
 
     public function testWithPut(): void
@@ -55,21 +69,22 @@ final class MapTest extends TestCase
         $arguments = [
             $key => $value,
         ];
-        $mapWith = $map->withPut($key, $value);
-        $this->assertNotSame($map, $mapWith);
-        $this->assertNotSame($map->keys(), $mapWith->keys());
-        $this->assertSame($value, $mapWith->get($key));
-        $mapWith->assertHas($key);
-        $this->assertSame($arguments, $mapWith->toArray());
+        $with = $map->withPut($key, $value);
+        $this->assertNotSame($map, $with);
+        $this->assertNotSame($map->keys(), $with->keys());
+        $this->assertSame($value, $with->get($key));
+        $with->assertHas($key);
+        $this->assertSame($arguments, $with->toArray());
     }
 
-    public function testWithPutConsecutiveNamed(): void
+    public function testWithPutConsecutive(): void
     {
         $map = new Map();
-        $mapWith = $map
+        $with = $map
             ->withPut('a', 'a')
-            ->withPut('b', 'b');
-        $this->assertCount(2, $mapWith);
+            ->withPut('b', 'b')
+            ->withPut('a', 'a');
+        $this->assertCount(2, $with);
     }
 
     public function testWithPutNumericVariadic(): void
@@ -81,18 +96,20 @@ final class MapTest extends TestCase
         $this->assertCount(2, $map);
     }
 
-    public function testWithOut(): void
+    public function testWithout(): void
     {
         $map = (new Map())
             ->withPut('a', 'foo')
             ->withPut('b', 'bar');
-        $mapWith = $map->without('a');
-        $this->assertNotSame($map, $mapWith);
-        $this->assertFalse($mapWith->has('a'));
-        $this->assertSame(['b'], $mapWith->keys());
+        $this->assertCount(2, $map);
+        $with = $map->without('a');
+        $this->assertCount(1, $with);
+        $this->assertNotSame($map, $with);
+        $this->assertFalse($with->has('a'));
+        $this->assertSame(['b'], $with->keys());
         $this->expectException(OutOfBoundsException::class);
         $this->expectExceptionMessage('Key `a` not found');
-        $mapWith->without('a');
+        $with->without('a');
     }
 
     public function testArrayKeys(): void
