@@ -1,6 +1,6 @@
 {
     "name": "chevere/data-structure",
-    "description": "A chevere data-structure package",
+    "description": "Map and Vector data structures",
     "homepage": "https://chevere.org",
     "type": "library",
     "license": "Apache-2.0",
