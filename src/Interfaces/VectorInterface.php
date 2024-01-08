@@ -23,21 +23,23 @@ interface VectorInterface extends Countable, IntegerKeysInterface, GetIteratorIn
 {
     public function withPush(mixed ...$value): self;
 
-    public function withSet(int $key, mixed $value): self;
+    public function withSet(int $pos, mixed $value): self;
 
     public function withUnshift(mixed ...$value): self;
 
-    public function withInsert(int $key, mixed ...$values): self;
+    public function withInsert(int $pos, mixed ...$values): self;
 
-    public function withRemove(int ...$key): self;
+    public function withRemove(int ...$pos): self;
 
-    public function has(int ...$key): bool;
+    public function has(int ...$pos): bool;
 
-    public function get(int $key): mixed;
+    public function get(int $pos): mixed;
 
     public function find(mixed $value): ?int;
 
     public function contains(mixed ...$value): bool;
+
+    public function assertHas(int ...$key): void;
 
     /**
      * @phpstan-ignore-next-line

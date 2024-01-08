@@ -66,11 +66,11 @@ final class Vector implements VectorInterface
         return $new;
     }
 
-    public function withSet(int $key, mixed $value): self
+    public function withSet(int $pos, mixed $value): self
     {
-        $this->assertHas($key);
+        $this->assertHas($pos);
         $new = clone $this;
-        $new->values[$key] = $value;
+        $new->values[$pos] = $value;
 
         return $new;
     }
@@ -84,21 +84,21 @@ final class Vector implements VectorInterface
         return $new;
     }
 
-    public function withInsert(int $key, mixed ...$values): VectorInterface
+    public function withInsert(int $pos, mixed ...$values): VectorInterface
     {
-        $this->assertHas($key);
+        $this->assertHas($pos);
         $new = clone $this;
-        array_splice($new->values, $key, 0, $values);
+        array_splice($new->values, $pos, 0, $values);
         $new->count += count($values);
 
         return $new;
     }
 
-    public function withRemove(int ...$key): VectorInterface
+    public function withRemove(int ...$pos): VectorInterface
     {
-        $this->assertHas(...$key);
+        $this->assertHas(...$pos);
         $new = clone $this;
-        foreach ($key as $item) {
+        foreach ($pos as $item) {
             unset($new->values[$item]);
             $new->count--;
         }
@@ -107,10 +107,10 @@ final class Vector implements VectorInterface
         return $new;
     }
 
-    public function has(int ...$key): bool
+    public function has(int ...$pos): bool
     {
         try {
-            $this->assertHas(...$key);
+            $this->assertHas(...$pos);
 
             return true;
         } catch (OutOfBoundsException) {
@@ -144,18 +144,18 @@ final class Vector implements VectorInterface
     /**
      * @throws OutOfBoundsException
      */
-    public function get(int $key): mixed
+    public function get(int $pos): mixed
     {
-        if (! $this->lookupKey($key)) {
+        if (! $this->lookupKey($pos)) {
             throw new OutOfBoundsException(
                 (string) message(
                     'Key `%key%` not found',
-                    key: strval($key)
+                    key: strval($pos)
                 )
             );
         }
 
-        return $this->values[$key];
+        return $this->values[$pos];
     }
 
     public function find(mixed $value): ?int
