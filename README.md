@@ -18,8 +18,6 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=chevere_data-structure&metric=sqale_index)](https://sonarcloud.io/dashboard?id=chevere_data-structure)
 [![CodeFactor](https://www.codefactor.io/repository/github/chevere/data-structure/badge)](https://www.codefactor.io/repository/github/chevere/data-structure)
 
-![DataStructure](.github/banner/data-structure-logo.svg)
-
 ## Summary
 
 DataStructure provides Map and Vector data structures.
