@@ -34,6 +34,9 @@ final class Map implements MapInterface
      */
     private array $keys = [];
 
+    /**
+     * @var int<0,max>
+     */
     private int $count = 0;
 
     public function __construct(mixed ...$value)
@@ -65,7 +68,6 @@ final class Map implements MapInterface
     public function getIterator(): Iterator
     {
         foreach ($this->keys as $key) {
-            /** @var string|int $lookup */
             $lookup = $this->lookupKey($key);
             yield $key => $this->values[$lookup];
         }
@@ -189,7 +191,7 @@ final class Map implements MapInterface
                 );
             }
             unset($this->keys[$lookup], $this->values[$lookup]);
-            $this->count--;
+            $this->count--; // @phpstan-ignore-line
         }
         $this->keys = array_values($this->keys);
         // @infection-ignore-all

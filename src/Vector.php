@@ -25,6 +25,9 @@ final class Vector implements VectorInterface
      */
     private array $values = [];
 
+    /**
+     * @var int<0,max>
+     */
     private int $count = 0;
 
     public function __construct(mixed ...$value)
@@ -100,7 +103,7 @@ final class Vector implements VectorInterface
         $new = clone $this;
         foreach ($pos as $item) {
             unset($new->values[$item]);
-            $new->count--;
+            $new->count--; // @phpstan-ignore-line
         }
         $new->values = array_values($new->values);
 

@@ -18,7 +18,7 @@ use function Chevere\DataStructure\data;
 
 final class FunctionsTest extends TestCase
 {
-    public function dataProvider(): array
+    public static function dataProvider(): array
     {
         return [
             [[0, 1, 2]],
