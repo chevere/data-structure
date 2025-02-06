@@ -94,7 +94,15 @@ The `get` method is used to retrieve the Map value for the given key.
 
 ```php
 $foo = $map->get('foo');
-$bar = $map->get('bar');
+```
+
+### Get Map value or default
+
+The `getOrDefault` method is used to retrieve the Map value for the given key or a default value if not found.
+
+```php
+$foo = $map->getOrDefault('foo', null);
+// Return null if not found
 ```
 
 ## Vector
