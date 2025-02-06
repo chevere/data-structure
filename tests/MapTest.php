@@ -129,4 +129,12 @@ final class MapTest extends TestCase
         $this->expectExceptionMessage('Key `0` not found');
         $map->get('0');
     }
+
+    public function testGetOrDefault(): void
+    {
+        $map = new Map(foo: 'bar');
+        $this->assertNull($map->getOrDefault('not-found'));
+        $this->assertSame('default', $map->getOrDefault('not-found', 'default'));
+        $this->assertSame('bar', $map->getOrDefault('foo'));
+    }
 }

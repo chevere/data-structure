@@ -42,6 +42,11 @@ interface MapInterface extends StringIntMappedInterface
     public function get(string|int $key): mixed;
 
     /**
+     * @return ?TValue
+     */
+    public function getOrDefault(string|int $key, mixed $default = null): mixed;
+
+    /**
      * @return array<int|string, TValue>
      */
     public function toArray(): array;

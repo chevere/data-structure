@@ -146,6 +146,16 @@ final class Map implements MapInterface
         return $this->values[$lookup];
     }
 
+    public function getOrDefault(string|int $key, mixed $default = null): mixed
+    {
+        $lookup = $this->lookupKey($key);
+        if ($lookup === null) {
+            return $default;
+        }
+
+        return $this->values[$lookup];
+    }
+
     private function lookupKey(string|int $key): ?string
     {
         $lookup = array_search($key, $this->keys, true);
