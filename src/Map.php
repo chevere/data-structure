@@ -22,27 +22,27 @@ use function Chevere\Message\message;
  * @template TValue
  * @implements MapInterface<TValue>
  */
-final class Map implements MapInterface
+class Map implements MapInterface
 {
     /**
      * @var array<mixed>
      */
-    private array $values = [];
+    protected array $values = [];
 
     /**
      * @var array<string|int>
      */
-    private array $keys = [];
+    protected array $keys = [];
 
     /**
      * @var int<0,max>
      */
-    private int $count = 0;
+    protected int $count = 0;
 
     public function __construct(mixed ...$value)
     {
         foreach ($value as $key => $item) {
-            $this->put($key, $item);
+            $this->in($key, $item);
         }
     }
 
@@ -80,7 +80,7 @@ final class Map implements MapInterface
     public function withPut(string|int $key, mixed $value): self
     {
         $new = clone $this;
-        $new->put($key, $value);
+        $new->in($key, $value);
 
         return $new;
     }
@@ -158,14 +158,14 @@ final class Map implements MapInterface
         return $this->values[$lookup];
     }
 
-    private function lookupKey(string|int $key): ?string
+    protected function lookupKey(string|int $key): ?string
     {
         $lookup = array_search($key, $this->keys, true);
 
         return $lookup === false ? null : strval($lookup);
     }
 
-    private function put(string|int $key, mixed $value): void
+    protected function in(string|int $key, mixed $value): void
     {
         $lookUp = $this->lookupKey($key);
         if ($lookUp === null) {
@@ -178,7 +178,7 @@ final class Map implements MapInterface
         $this->values[$lookUp] = $value;
     }
 
-    private function out(string|int ...$key): void
+    protected function out(string|int ...$key): void
     {
         foreach ($key as $item) {
             $lookup = $this->lookupKey($item);

@@ -18,17 +18,17 @@ use Iterator;
 use OutOfBoundsException;
 use function Chevere\Message\message;
 
-final class Vector implements VectorInterface
+class Vector implements VectorInterface
 {
     /**
      * @var array<mixed>
      */
-    private array $values = [];
+    protected array $values = [];
 
     /**
      * @var int<0,max>
      */
-    private int $count = 0;
+    protected int $count = 0;
 
     public function __construct(mixed ...$value)
     {
@@ -180,12 +180,12 @@ final class Vector implements VectorInterface
         return true;
     }
 
-    private function lookupKey(int $key): bool
+    protected function lookupKey(int $key): bool
     {
         return array_key_exists($key, $this->values);
     }
 
-    private function put(mixed ...$values): void
+    protected function put(mixed ...$values): void
     {
         foreach ($values as $value) {
             $this->values[] = $value;
