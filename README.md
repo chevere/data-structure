@@ -218,7 +218,7 @@ $vector->contains($value); // bool
 
 ## Documentation
 
-Documentation is available at [chevere.org](https://chevere.org/packages/data-structure).
+Documentation is available at [chevere.org/packages/data-structure](https://chevere.org/packages/data-structure).
 
 ## License
 
