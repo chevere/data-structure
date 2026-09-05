@@ -68,6 +68,7 @@ class Map implements MapInterface
     public function getIterator(): Iterator
     {
         foreach ($this->keys as $key) {
+            /** @var string $lookup */
             $lookup = $this->lookupKey($key);
             yield $key => $this->values[$lookup];
         }
