@@ -17,6 +17,9 @@ use Chevere\DataStructure\Interfaces\VectorInterface;
 use Chevere\DataStructure\Vector;
 use Iterator;
 
+/**
+ * @template-covariant TValue
+ */
 trait VectorTrait
 {
     private VectorInterface $vector;
@@ -39,6 +42,9 @@ trait VectorTrait
         return $this->vector->count();
     }
 
+    /**
+     * @return Iterator<TValue>
+     */
     public function getIterator(): Iterator
     {
         return $this->vector->getIterator();
