@@ -16,7 +16,6 @@ namespace Chevere\DataStructure;
 use Chevere\DataStructure\Interfaces\VectorInterface;
 use Iterator;
 use OutOfBoundsException;
-use function Chevere\Message\message;
 
 class Vector implements VectorInterface
 {
@@ -137,10 +136,7 @@ class Vector implements VectorInterface
         }
 
         throw new OutOfBoundsException(
-            (string) message(
-                'Missing key(s) `%keys%`',
-                keys: implode(', ', $missing)
-            )
+            sprintf('Missing key(s) `%s`', implode(', ', $missing))
         );
     }
 
@@ -151,10 +147,7 @@ class Vector implements VectorInterface
     {
         if (! $this->lookupKey($pos)) {
             throw new OutOfBoundsException(
-                (string) message(
-                    'Key `%key%` not found',
-                    key: strval($pos)
-                )
+                sprintf('Key `%s` not found', strval($pos))
             );
         }
 

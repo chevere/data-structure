@@ -16,7 +16,6 @@ namespace Chevere\DataStructure;
 use Chevere\DataStructure\Interfaces\MapInterface;
 use Iterator;
 use OutOfBoundsException;
-use function Chevere\Message\message;
 
 /**
  * @template TValue
@@ -124,10 +123,7 @@ class Map implements MapInterface
         }
 
         throw new OutOfBoundsException(
-            (string) message(
-                'Missing key(s) `%keys%`',
-                keys: implode(', ', $missing)
-            )
+            sprintf('Missing key(s) `%s`', implode(', ', $missing))
         );
     }
 
@@ -139,10 +135,7 @@ class Map implements MapInterface
         $lookup = $this->lookupKey($key);
         if ($lookup === null) {
             throw new OutOfBoundsException(
-                (string) message(
-                    'Key `%key%` not found',
-                    key: strval($key)
-                )
+                sprintf('Key `%s` not found', strval($key))
             );
         }
 
@@ -185,10 +178,7 @@ class Map implements MapInterface
             $lookup = $this->lookupKey($item);
             if ($lookup === null) {
                 throw new OutOfBoundsException(
-                    (string) message(
-                        'Key `%key%` not found',
-                        key: strval($item)
-                    )
+                    sprintf('Key `%s` not found', strval($item))
                 );
             }
             unset($this->keys[$lookup], $this->values[$lookup]);
